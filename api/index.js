@@ -2,8 +2,8 @@ const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
 
-const connectDB = require("./config/db");
-const productRoute = require("./routes/productRoutes");
+const connectDB = require("../config/db");
+const productRoute = require("../routes/productRoutes");
 
 const app = express();
 
@@ -36,8 +36,5 @@ app.use("/api/products", productRoute);
 ======================= */
 connectDB();
 
-/* =======================
-   ❌ REMOVE app.listen()
-   ✅ EXPORT app for Vercel
-======================= */
+
 module.exports = app;
