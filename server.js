@@ -1,31 +1,43 @@
-const express = require('express');
-const cors = require('cors');
-require('dotenv').config();
-const connectDB = require('./config/db');
-const productRoute = require('./routes/productRoutes');
+const express = require("express");
+const cors = require("cors");
+require("dotenv").config();
+
+const connectDB = require("./config/db");
+const productRoute = require("./routes/productRoutes");
 
 const app = express();
 
-// middlewares
-app.use(cors({
-  origin: '*',
-  methods: ["GET", "POST", "PUT", "DELETE"],
-}));
+/* =======================
+   MIDDLEWARES
+======================= */
+app.use(
+  cors({
+    origin: "*", // you can restrict later to frontend URL
+    methods: ["GET", "POST", "PUT", "DELETE"],
+  })
+);
+
 app.use(express.json());
 
-// test route
+/* =======================
+   TEST ROUTE
+======================= */
 app.get("/test", (req, res) => {
-  res.send("Backend is alive");
+  res.send("Backend is alive 🚀");
 });
 
-// routes
+/* =======================
+   API ROUTES
+======================= */
+app.use("/api/products", productRoute);
 
-app.use('/api/products', productRoute);
-
-// connect DB
+/* =======================
+   DATABASE
+======================= */
 connectDB();
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+/* =======================
+   ❌ REMOVE app.listen()
+   ✅ EXPORT app for Vercel
+======================= */
+module.exports = app;
