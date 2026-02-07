@@ -12,7 +12,10 @@ const app = express();
 ======================= */
 app.use(
   cors({
-    origin: "*", // you can restrict later to frontend URL
+    origin: [
+      "http://localhost:5173",        // for local dev
+      "https://tajmahal-frontend.vercel.app" // frontend production URL
+    ], 
     methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
