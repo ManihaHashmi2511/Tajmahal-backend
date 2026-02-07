@@ -14,7 +14,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",        // for local dev
-      "https://tajmahal-frontend.vercel.app/" // frontend production URL
+      "https://tajmahal-frontend.vercel.app" // frontend production URL
     ], 
     methods: ["GET", "POST", "PUT", "DELETE"],
   })
