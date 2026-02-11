@@ -16,6 +16,7 @@ const storage = new CloudinaryStorage({
 });
 const parser = multer({ storage });
 
+productRoute.get("/stats", getProductStats);
 
 productRoute.get('/', getProducts);
 
@@ -27,7 +28,6 @@ productRoute.post('/', parser.single('image'), createProduct);
 productRoute.put('/:id',upload.single("image"), updateProduct);
 
 productRoute.delete("/:id", deleteProduct);
-productRoute.get("/stats", getProductStats);
 
 
 

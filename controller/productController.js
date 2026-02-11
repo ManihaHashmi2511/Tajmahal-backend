@@ -150,32 +150,36 @@ const updateProduct = async (req, res) => {
   try {
     const products = await Product.find();
 
-    // BRAND COUNT
-    const brandStats = {};
-    const typeStats = {};
-
+    // ✅ Brand distribution (for Pie chart)
+    const brandMap = {};
     products.forEach((p) => {
-      // brand count
-      brandStats[p.brand] = (brandStats[p.brand] || 0) + 1;
-
-      // type count
-      typeStats[p.type] = (typeStats[p.type] || 0) + 1;
+      brandMap[p.brand] = (brandMap[p.brand] || 0) + 1;
     });
+
+    const brandChart = Object.keys(brandMap).map((brand) => ({
+      name: brand,
+      value: brandMap[brand],
+    }));
+
+    // ✅ Product ranking (for Bar chart)
+    const rankingChart = products.map((p) => ({
+      name: p.title,
+      count: 1, // you can change later if you add views/sales
+    }));
+
+    console.log("Stats computed:", { brandChart, rankingChart });
 
     res.json({
-      brandChart: Object.entries(brandStats).map(([brand, value]) => ({
-        brand,
-        value,
-      })),
-      typeChart: Object.entries(typeStats).map(([name, count]) => ({
-        name,
-        count,
-      })),
+      brandChart,
+      rankingChart,
+      totalProducts: products.length,
     });
   } catch (error) {
-    res.status(500).json({ message: "Stats error" });
+    console.error("Stats Error:", error);
+    res.status(500).json({ message: "Stats API failed" });
   }
 };
+
 
 
 

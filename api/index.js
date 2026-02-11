@@ -4,6 +4,7 @@ require("dotenv").config();
 
 const connectDB = require("../config/db");
 const productRoute = require("../routes/productRoutes");
+const adminRouter = require("../routes/adminRoutes");
 
 const app = express();
 
@@ -33,11 +34,16 @@ app.get("/test", (req, res) => {
    API ROUTES
 ======================= */
 app.use("/api/products", productRoute);
+app.use("/api/admin", adminRouter)
 
 /* =======================
    DATABASE
 ======================= */
 connectDB();
+
+// app.listen(process.env.PORT || 5000, () => {
+//   console.log(`Server running on port ${process.env.PORT || 5000}`);
+// });
 
 
 module.exports = app;
